@@ -36,6 +36,11 @@ $(call build-image,openstack-cinder-csi-driver-operator,$(IMAGE_REGISTRY)/ocp/4.
 # $5 - output
 $(call add-bindata,generated,./assets/...,assets,generated,pkg/generated/bindata.go)
 
+pkg/generated/bindata.go: $(shell find assets -type f)
+	$(MAKE) update-bindata
+
+build: pkg/generated/bindata.go
+
 clean:
 	$(RM) openstack-cinder-csi-driver-operator
 .PHONY: clean
